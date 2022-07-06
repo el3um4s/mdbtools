@@ -1,106 +1,106 @@
-# Typescript NPM Package Starter
-My template for creating npm packages using typescript.
+# Node MdbTools
 
-- TS to JS
-- Testing via Jest, includes coverage
-- ESLint
-- Ignore files to ensure minimal code is stored/shipped
+[mdbtools](https://github.com/mdbtools/mdbtools) for Node to use MS Access database.
 
-NPM link: [@el3um4s/typescript-npm-package-starter](https://www.npmjs.com/package/@el3um4s/typescript-npm-package-starter)
+These aren't native bindings, they just talk to stdin/stdout/stderr of mdbtools (specifically mdb-tables and mdb-export).
 
-### Getting Started
+NPM link: [@el3um4s/mdbtools](https://www.npmjs.com/package/@el3um4s/mdbtools)
 
-To create a new project based on this template using degit:
+### Installation
 
-```bash
-npx degit el3um4s/typescript-npm-package-starter
+```
+npm install @el3um4s/mdbtools
 ```
 
-Then install the dependencies with
+### Requirements
 
-```bash
-npm install
+This package requires [mdbtools](https://github.com/mdbtools/mdbtools) installed on the host system.
+
+**Windows**
+
+Download and unzip [mdbtools-win](utils/mdbtools-win.zip) (Based on [mdbtools-win](https://github.com/lsgunth/mdbtools-win)).
+
+**Debian**
+
+```
+apt install mdbtools
 ```
 
-Now update the name field in package.json with your desired package name. Then update the homepage field in package.json. And finally add your code.
+**MacOS**
 
-### Build the package
-
-Run
-
-```bash
-npm run build
+```
+brew install mdbtools
 ```
 
-### Test the package
+This package is not meant for macOS. It may be that it works like it doesn't.
 
-You can test the code with [Jest](https://jestjs.io/)
-
-```bash
-npm test
-```
-
-You can find the test coverage in `coverage/lcov-report/index.html`.
-
-### Check dependencies
-
-You can check and upgrade dependencies to the latest versions, ignoring specified versions. with [npm-check-updates](https://www.npmjs.com/package/npm-check-updates):
-
-```bash
-npm run check-updates
-```
-
-You can also use `npm run check-updates:minor` to update only patch and minor.
-
-Instead `npm run check-updates:patch` only updates patch.
-
-### Publish
-
-First commit the changes to GitHub. Then login to your [NPM](https://www.npmjs.com) account (If you don’t have an account you can do so on [https://www.npmjs.com/signup](https://www.npmjs.com/signup))
-
-```bash
-npm login
-```
-
-Then run publish:
-
-```bash
-npm publish
-```
-
-If you're using a scoped name use:
-
-```bash
-npm publish --access public
-```
-
-### Bumping a new version
-
-To update the package use:
-
-```bash
-npm version patch
-```
-
-and then
-
-```bash
-npm publish
-```
-
-### Install and use the package
-
-To use the package in a project:
-
-```bash
-npm i @el3um4s/typescript-npm-package-starter
-```
-
-and then in a file:
+### Usage
 
 ```ts
-import { ciao } from "@el3um4s/typescript-npm-package-starter";
+import { versionMdbTools } from "@el3um4s/mdbtools";
 
-const b = ciao("mondo");
-console.log(b); // Ciao Mondo
+// in Windows
+const windowsPath = "./mdbtools-win";
+const versionW = await versionMdbTools(windowsPath);
+
+console.log(versionW);
+// mdbtools v1.0.0
+
+// in Linux (Debian)
+const versionL = await versionMdbTools();
+
+console.log(versionL);
+// mdbtools v0.7.1
 ```
+
+### API: mdb-ver
+
+`display the version of the specified file`
+
+- `version({ database: "",windowsPath: ""}):Promise<string>` Get the version (JET 3 or 4) of an mdb file
+- `versionMdbTools(path: string): Promise<string>` Get mdbtools version
+
+Examples:
+
+```ts
+const windowsPath = "./mdbtools-win";
+const database = "./src/__tests__/fruit.mdb";
+const v = await version({ database, windowsPath });
+console.log(v);
+// JET4
+```
+
+### API: mdb-tables
+
+`list tables in the specified file`
+
+- `tables({ database: "",windowsPath: ""}):Promise<string[]>` Get the tables in an mdb file (exclude system tables)
+- `tablesAll({ database: "",windowsPath: ""}):Promise<string[]>` Get the tables in an mdb file (include system tables)
+- `tablesSystem({ database: "",windowsPath: ""}):Promise<string[]>` Get the tables in an mdb file (only system tables)
+
+Examples:
+
+```ts
+const windowsPath = "./mdbtools-win";
+const database = "./src/__tests__/fruit.mdb";
+
+const list = await tables({ database, windowsPath });
+console.log(list);
+// [ "Fruit", "Fruit Salad", "Veggie Salad", "Muffin/Bread", "Dried"]
+
+const listSystem = await tablesSystem({ database });
+console.log(listSystem);
+// [ "MSysObjects", "MSysACEs", "MSysQueries", "MSysRelationships", "MSysAccessObjects", "MSysNavPaneGroupCategories", "MSysNavPaneGroups", "MSysNavPaneGroupToObjects", "MSysNavPaneObjectIDs", "MSysAccessXML", "MSysNameMap" ]
+```
+
+### Acknowledgments
+
+Sample database used for tests and examples is from [mdb](https://github.com/maxogden/node-mdb).
+
+To create this package I was inspired by:
+
+- [mdbtools/mdbtools](https://github.com/mdbtools/mdbtools)
+- [maxogden/node-mdb](https://github.com/maxogden/node-mdb)
+- [1withforce/node_mdb_parse](https://github.com/maxogden/node-mdb)
+- [lsgunth/mdbtools-win](https://github.com/lsgunth/mdbtools-win)
+- [nuintun/node-adodb](https://github.com/nuintun/node-adodb) (I forked this in [el3um4s/node-adodb](https://github.com/el3um4s/node-adodb))

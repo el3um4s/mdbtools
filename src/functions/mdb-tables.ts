@@ -10,7 +10,10 @@ const tables = async (
   }
 ): Promise<string[]> => {
   const { database, windowsPath } = data;
-  const command = engine({ windowsPath, command: "mdb-tables" });
+  const command = engine({
+    windowsPath: windowsPath ? windowsPath : "",
+    command: "mdb-tables",
+  });
   const pathDatabase = path.resolve(database);
   const result = await launchCommand({
     command,
@@ -28,7 +31,10 @@ const tablesAll = async (
   }
 ): Promise<string[]> => {
   const { database, windowsPath } = data;
-  const command = engine({ windowsPath, command: "mdb-tables" });
+  const command = engine({
+    windowsPath: windowsPath ? windowsPath : "",
+    command: "mdb-tables",
+  });
   const pathDatabase = path.resolve(database);
   const result = await launchCommand({
     command,
@@ -46,7 +52,10 @@ const tablesSystem = async (
   }
 ): Promise<string[]> => {
   const { database, windowsPath } = data;
-  const command = engine({ windowsPath, command: "mdb-tables" });
+  const command = engine({
+    windowsPath: windowsPath ? windowsPath : "",
+    command: "mdb-tables",
+  });
   const pathDatabase = path.resolve(database);
   const withSystemTables = await launchCommand({
     command,

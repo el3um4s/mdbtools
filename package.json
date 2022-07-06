@@ -1,7 +1,7 @@
 {
   "name": "@el3um4s/mdbtools",
   "version": "0.0.1",
-  "description": "mdbtools",
+  "description": "mdbtools for Node to use MS Access database",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
@@ -27,8 +27,15 @@
   "keywords": [
     "typescript",
     "npm",
-    "template",
-    "ts"
+    "ts",
+    "ms-access",
+    "access",
+    "msaccess",
+    "mdb",
+    "accdb",
+    "mdbtools",
+    "windows",
+    "linux"
   ],
   "author": "Samuele C. De Tomasi",
   "license": "MIT",
