@@ -4,7 +4,7 @@ describe("ver-mdb", () => {
   test("ver-mdb -M", async () => {
     const windowsPath = "./mdbtools-win";
     const v = await versionMdbTools(windowsPath);
-    expect(v).toBe("mdbtools v1.0.0");
+    expect(v).toContain("mdbtools");
   });
 
   test("ver-mdb fruit.mdb", async () => {
