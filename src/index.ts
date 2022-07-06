@@ -1,6 +1,8 @@
-const myCustomFunction = (name: string):string => `Hello ${name}`;
+import { ver } from "./functions/ver";
+
+const myCustomFunction = (name: string): string => `Hello ${name}`;
 function ciao(name: string): string {
-    return `Ciao ${name}`;
+  return `Ciao ${name}`;
 }
 
-export { myCustomFunction, ciao};
+export { myCustomFunction, ciao, ver };
