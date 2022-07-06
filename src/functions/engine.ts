@@ -8,7 +8,7 @@ const engine = (
   }
 ): string => {
   return isWindows()
-    ? path.join(data.windowsPath, `${data.command}.exe`)
+    ? path.resolve(data.windowsPath, `${data.command}.exe`)
     : data.command;
 };
 
