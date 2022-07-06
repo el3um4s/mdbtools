@@ -1,35 +1,45 @@
-import { exec, spawn } from "node:child_process";
-import path = require("node:path");
+// import { exec, spawn } from "node:child_process";
+import { engine } from "./engine";
+// import path = require("node:path");
+// import { isWindows } from "./isWindows";
+import { launchCommand } from "./launchCommand";
+// import { Version, VersionMdbTools } from "../Interfaces/Commands";
 
-const isEmpty = (object: any) => Object.keys(object).length === 0;
-
-const ver = () => {
-  return new Promise((resolve, reject) => {
-    const stderrOutput = [];
-    const errors = Object.create(null);
-
-    const p = path.join("I:/Repository/NPM/mdbtools/mdbtools-win/mdb-ver.exe");
-    const child = spawn(p, ["-M"]);
-
-    child.on("error", (error) => (errors.spawn = error));
-    child.stdin.on("error", (error) => (errors.stdin = error));
-    child.stdout.on("error", (error) => (errors.stdout = error));
-    child.stderr.on("error", (error) => (errors.stderr = error));
-    child.stderr.on("data", (data) => stderrOutput.push(data));
-
-    // Capture output
-    const buffers: any[] = [];
-    child.stdout.on("data", (data) => buffers.push(data));
-
-    child.on("exit", () => {
-      if (!isEmpty(errors)) {
-        // Reject error
-        return reject(Object.assign(new Error(`Error`), errors));
-      }
-      return resolve(Buffer.concat(buffers).toString());
-    });
-  });
+const versionMdbTools = async (windowsPath = ""): Promise<string> => {
+  const command = engine({ windowsPath, command: "mdb-ver" });
+  const result = await launchCommand({ command, args: ["-M"] });
+  return result.trim();
 };
+
+// const isEmpty = (object: any) => Object.keys(object).length === 0;
+
+// const ver = () => {
+//   return new Promise((resolve, reject) => {
+//     const stderrOutput = [];
+//     const errors = Object.create(null);
+
+//     const p = path.join("I:/Repository/NPM/mdbtools/mdbtools-win/mdb-ver.exe");
+//     const child = spawn(p, ["-M"]);
+
+//     child.on("error", (error) => (errors.spawn = error));
+//     child.stdin.on("error", (error) => (errors.stdin = error));
+//     child.stdout.on("error", (error) => (errors.stdout = error));
+//     child.stderr.on("error", (error) => (errors.stderr = error));
+//     child.stderr.on("data", (data) => stderrOutput.push(data));
+
+//     // Capture output
+//     const buffers: any[] = [];
+//     child.stdout.on("data", (data) => buffers.push(data));
+
+//     child.on("exit", () => {
+//       if (!isEmpty(errors)) {
+//         // Reject error
+//         return reject(Object.assign(new Error(`Error`), errors));
+//       }
+//       return resolve(Buffer.concat(buffers).toString());
+//     });
+//   });
+// };
 
 // const ver = async () => {
 //   const p = path.join("I:/Repository/NPM/mdbtools/mdbtools-win/mdb-ver.exe");
@@ -73,4 +83,4 @@ const ver = () => {
 //   console.log(`Child exited with code ${code}`);
 // });
 
-export { ver };
+export { versionMdbTools };

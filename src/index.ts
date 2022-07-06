@@ -1,8 +1,9 @@
-import { ver } from "./functions/ver";
+import { versionMdbTools } from "./functions/ver";
+// import { launchCommand } from "./functions/launchCommand";
 
-const myCustomFunction = (name: string): string => `Hello ${name}`;
-function ciao(name: string): string {
-  return `Ciao ${name}`;
-}
+// const myCustomFunction = (name: string): string => `Hello ${name}`;
+// function ciao(name: string): string {
+//   return `Ciao ${name}`;
+// }
 
-export { myCustomFunction, ciao, ver };
+export { versionMdbTools };
