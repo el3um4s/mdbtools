@@ -4,16 +4,18 @@ import {
   tables,
   tablesAll,
   tablesSystem,
+  queries,
+  queriesSQL,
 } from "../index";
 
-describe("ver-mdb", () => {
-  test("ver-mdb -M", async () => {
+describe("mdb-ver", () => {
+  test("mdb-ver", async () => {
     const windowsPath = "./mdbtools-win";
     const v = await versionMdbTools(windowsPath);
     expect(v).toContain("mdbtools");
   });
 
-  test("ver-mdb fruit.mdb", async () => {
+  test("mdb-ver fruit.mdb", async () => {
     const windowsPath = "./mdbtools-win";
     const database = "./src/__tests__/fruit.mdb";
     const v = await version({ database, windowsPath });
@@ -78,5 +80,33 @@ describe("mdb-tables", () => {
       "MSysNameMap",
     ];
     expect(t.sort()).toEqual(expected.sort());
+  });
+});
+
+describe("mdb-queries", () => {
+  test("mdb-queries test.mdb", async () => {
+    const windowsPath = "./mdbtools-win";
+    const database = "./src/__tests__/test.mdb";
+    const q = await queries({ windowsPath, database });
+    const expected = [
+      "UserA",
+      "MainColors",
+      "ChangeValueDogTo40",
+      "ChangeValueDotTo4",
+      "AddApple",
+      "DeleteApple",
+      "aàeèéiìoòuù",
+    ];
+    expect(q.sort()).toEqual(expected.sort());
+  });
+
+  test("mdb-queries test.mdb users", async () => {
+    const windowsPath = "./mdbtools-win";
+    const database = "./src/__tests__/test.mdb";
+    const query = "UserA";
+    const q = await queriesSQL({ database, windowsPath, query });
+    expect(q.trim()).toEqual(
+      `SELECT� �,Users.* FROM �,[Users] WHERE (((Users.UserCategory)="A")) �;;;`.trim()
+    );
   });
 });

@@ -27,9 +27,8 @@ interface Cmd {
 const launchCommand = (cmd: Cmd): Promise<string> => {
   const { command, args, options, input } = cmd;
 
-  const encoding: BufferEncoding = "utf8";
-
   return new Promise((resolve, reject) => {
+    const encoding: BufferEncoding = "utf8";
     const stderrOutput: Uint8Array[] = [];
     const errors = Object.create(null);
 
@@ -43,7 +42,14 @@ const launchCommand = (cmd: Cmd): Promise<string> => {
 
     // Capture output
     const buffers: Uint8Array[] = [];
-    child.stdout.on("data", (data) => buffers.push(data));
+    child.stdout.on("data", (data) => {
+      console.log(data);
+      const str = data.toString();
+      console.log(str);
+      // const a = data.toString("dbcs");
+      // console.log(a);
+      buffers.push(data);
+    });
 
     child.on("close", (exitCode) => {
       if (exitCode !== 0 && exitCode != null) {
@@ -52,6 +58,7 @@ const launchCommand = (cmd: Cmd): Promise<string> => {
 
       if (stderrOutput.length) {
         errors.process = Buffer.concat(stderrOutput).toString(encoding);
+        // errors.process = Buffer.concat(stderrOutput).toString();
       }
 
       if (!isEmpty(errors)) {
@@ -60,9 +67,16 @@ const launchCommand = (cmd: Cmd): Promise<string> => {
           Object.assign(new Error(`Spawn ${command} error`), errors)
         );
       }
+
       return resolve(
         transcode(Buffer.concat(buffers), encoding, "utf8").toString("utf8")
       );
+      // Buffer.concat(buffers).toString()
+      // buffers.map((buffer) => buffer.toString()).join("")
+      // buffers.toString()
+      // Buffer.from(buffers).toString()
+      // buffers.map((buffer) => Buffer.from(buffer).toString("utf8")).join("")
+      // buffers.map((buffer) => Buffer.from(buffer).toString("utf8")).join("")
     });
 
     child.stdin.end(input, encoding);

@@ -4,7 +4,7 @@ import { launchCommand } from "./launchCommand";
 import path = require("node:path");
 
 const tables = async (
-  data: { database: string; windowsPath: string } = {
+  data: { database: string; windowsPath?: string } = {
     database: "",
     windowsPath: "",
   }
@@ -25,7 +25,7 @@ const tables = async (
 };
 
 const tablesAll = async (
-  data: { database: string; windowsPath: string } = {
+  data: { database: string; windowsPath?: string } = {
     database: "",
     windowsPath: "",
   }
@@ -46,7 +46,7 @@ const tablesAll = async (
 };
 
 const tablesSystem = async (
-  data: { database: string; windowsPath: string } = {
+  data: { database: string; windowsPath?: string } = {
     database: "",
     windowsPath: "",
   }

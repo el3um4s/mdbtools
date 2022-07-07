@@ -1,4 +1,4 @@
 node_modules
 /lib
 /coverage
-/mdbtools-win/fruit.mdb
+/mdbtools-win/*.mdb

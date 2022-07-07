@@ -57,8 +57,8 @@ console.log(versionL);
 
 `display the version of the specified file`
 
-- `version({ database: "",windowsPath: ""}):Promise<string>` Get the version (JET 3 or 4) of an mdb file
-- `versionMdbTools(path: string): Promise<string>` Get mdbtools version
+- `version({ database: "",windowsPath?: ""}):Promise<string>` Get the version (JET 3 or 4) of an mdb file
+- `versionMdbTools(windowsPath?: string): Promise<string>` Get mdbtools version
 
 Examples:
 
@@ -74,9 +74,9 @@ console.log(v);
 
 `list tables in the specified file`
 
-- `tables({ database: "",windowsPath: ""}):Promise<string[]>` Get the tables in an mdb file (exclude system tables)
-- `tablesAll({ database: "",windowsPath: ""}):Promise<string[]>` Get the tables in an mdb file (include system tables)
-- `tablesSystem({ database: "",windowsPath: ""}):Promise<string[]>` Get the tables in an mdb file (only system tables)
+- `tables({ database: "",windowsPath?: ""}):Promise<string[]>` Get the tables in an mdb file (exclude system tables)
+- `tablesAll({ database: "",windowsPath?: ""}):Promise<string[]>` Get the tables in an mdb file (include system tables)
+- `tablesSystem({ database: "",windowsPath?: ""}):Promise<string[]>` Get the tables in an mdb file (only system tables)
 
 Examples:
 
