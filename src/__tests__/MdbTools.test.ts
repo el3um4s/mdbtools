@@ -106,7 +106,7 @@ describe("mdb-queries", () => {
     const query = "UserA";
     const q = await queriesSQL({ database, windowsPath, query });
     expect(q.trim()).toEqual(
-      `SELECT� �,Users.* FROM �,[Users] WHERE (((Users.UserCategory)="A")) �;;;`.trim()
+      `SELECT Users.* FROM [Users] WHERE (((Users.UserCategory)="A"))`.trim()
     );
   });
 });

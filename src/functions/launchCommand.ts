@@ -1,6 +1,8 @@
 import { spawn, SpawnOptionsWithoutStdio } from "node:child_process";
 import { Buffer, transcode } from "buffer";
 
+import { encode, decode, labels } from "../windows-1252/windows-1252";
+
 const isEmpty = (object: Record<string, unknown>): boolean =>
   Object.keys(object).length === 0;
 
@@ -32,7 +34,10 @@ const launchCommand = (cmd: Cmd): Promise<string> => {
     const stderrOutput: Uint8Array[] = [];
     const errors = Object.create(null);
 
-    const child = spawn(command, args, { windowsHide: true, ...options });
+    const child = spawn(command, args, {
+      windowsHide: true,
+      ...options,
+    });
 
     child.on("error", (error) => (errors.spawn = error));
     child.stdin.on("error", (error) => (errors.stdin = error));
@@ -41,14 +46,16 @@ const launchCommand = (cmd: Cmd): Promise<string> => {
     child.stderr.on("data", (data) => stderrOutput.push(data));
 
     // Capture output
-    const buffers: Uint8Array[] = [];
+    // const buffers: Uint16Array[] = [];
+    const result: string[] = [];
     child.stdout.on("data", (data) => {
-      console.log(data);
-      const str = data.toString();
-      console.log(str);
-      // const a = data.toString("dbcs");
-      // console.log(a);
-      buffers.push(data);
+      // console.log(data);
+      // const str = data.toString();
+      // console.log(str);
+      const text = decode(data, {}).replaceAll("À,", "").replaceAll("À", "");
+      // console.log(text);
+      result.push(text);
+      // buffers.push(data);
     });
 
     child.on("close", (exitCode) => {
@@ -68,9 +75,8 @@ const launchCommand = (cmd: Cmd): Promise<string> => {
         );
       }
 
-      return resolve(
-        transcode(Buffer.concat(buffers), encoding, "utf8").toString("utf8")
-      );
+      return resolve(result.join(""));
+      // transcode(Buffer.concat(buffers), encoding, "utf8").toString("utf8")
       // Buffer.concat(buffers).toString()
       // buffers.map((buffer) => buffer.toString()).join("")
       // buffers.toString()
