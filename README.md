@@ -93,6 +93,30 @@ console.log(listSystem);
 // [ "MSysObjects", "MSysACEs", "MSysQueries", "MSysRelationships", "MSysAccessObjects", "MSysNavPaneGroupCategories", "MSysNavPaneGroups", "MSysNavPaneGroupToObjects", "MSysNavPaneObjectIDs", "MSysAccessXML", "MSysNameMap" ]
 ```
 
+### API: mdb-queries
+
+`List queries from an Access database`
+
+Requires: mdbtools >= 0.9
+
+- `queries({ database: "",windowsPath?: ""}):Promise<string[]>` Get the queries in an mdb file
+- `queriesSQL({ database: "",windowsPath?: ""}, query: ""):Promise<string>` Get the query SQL string
+
+Examples:
+
+```ts
+const windowsPath = "./mdbtools-win";
+const database = "./src/__tests__/test.mdb";
+
+const listQueries = await queries({ database, windowsPath });
+console.log(listQueries);
+// [ "UserA", "MainColors", "ChangeValueDogTo40", "ChangeValueDotTo4", "AddApple", "DeleteApple", "aàeèéiìoòuù"]
+
+const sql = await queriesSQL({ database, windowsPath, query: "UserA" });
+console.log(sql);
+// SELECT Users.* FROM [Users] WHERE (((Users.UserCategory)="A"))
+```
+
 ### Acknowledgments
 
 Sample database used for tests and examples is from [mdb](https://github.com/maxogden/node-mdb).

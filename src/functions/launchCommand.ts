@@ -1,12 +1,11 @@
 import { spawn, SpawnOptionsWithoutStdio } from "node:child_process";
-import { Buffer, transcode } from "buffer";
+import { Buffer } from "buffer";
 
-import { encode, decode, labels } from "../windows-1252/windows-1252";
+import { decode } from "../windows-1252/windows-1252";
 
 const isEmpty = (object: Record<string, unknown>): boolean =>
   Object.keys(object).length === 0;
 
-// Exit messages
 const exitMessages: Record<number, string> = {
   1: "Uncaught Fatal Exception",
   3: "Internal JavaScript Parse Error",
@@ -45,17 +44,10 @@ const launchCommand = (cmd: Cmd): Promise<string> => {
     child.stderr.on("error", (error) => (errors.stderr = error));
     child.stderr.on("data", (data) => stderrOutput.push(data));
 
-    // Capture output
-    // const buffers: Uint16Array[] = [];
     const result: string[] = [];
     child.stdout.on("data", (data) => {
-      // console.log(data);
-      // const str = data.toString();
-      // console.log(str);
       const text = decode(data, {}).replaceAll("À,", "").replaceAll("À", "");
-      // console.log(text);
       result.push(text);
-      // buffers.push(data);
     });
 
     child.on("close", (exitCode) => {
@@ -65,7 +57,6 @@ const launchCommand = (cmd: Cmd): Promise<string> => {
 
       if (stderrOutput.length) {
         errors.process = Buffer.concat(stderrOutput).toString(encoding);
-        // errors.process = Buffer.concat(stderrOutput).toString();
       }
 
       if (!isEmpty(errors)) {
@@ -76,13 +67,6 @@ const launchCommand = (cmd: Cmd): Promise<string> => {
       }
 
       return resolve(result.join(""));
-      // transcode(Buffer.concat(buffers), encoding, "utf8").toString("utf8")
-      // Buffer.concat(buffers).toString()
-      // buffers.map((buffer) => buffer.toString()).join("")
-      // buffers.toString()
-      // Buffer.from(buffers).toString()
-      // buffers.map((buffer) => Buffer.from(buffer).toString("utf8")).join("")
-      // buffers.map((buffer) => Buffer.from(buffer).toString("utf8")).join("")
     });
 
     child.stdin.end(input, encoding);

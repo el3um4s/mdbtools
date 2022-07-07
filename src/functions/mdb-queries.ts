@@ -43,8 +43,6 @@ const queriesSQL = async (
   });
 
   return result;
-  //   const listQueries = result.split(";").filter((x) => x.trim() !== "");
-  //   return listQueries;
 };
 
 export { queries, queriesSQL };
