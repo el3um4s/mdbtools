@@ -57,6 +57,8 @@ console.log(versionL);
 
 `display the version of the specified file`
 
+Requires: mdbtools 0.4+
+
 - `version({ database: "",windowsPath?: ""}):Promise<string>` Get the version (JET 3 or 4) of an mdb file
 - `versionMdbTools(windowsPath?: string): Promise<string>` Get mdbtools version
 
@@ -73,6 +75,8 @@ console.log(v);
 ### API: mdb-tables
 
 `list tables in the specified file`
+
+Requires: mdbtools 0.3+
 
 - `tables({ database: "",windowsPath?: ""}):Promise<string[]>` Get the tables in an mdb file (exclude system tables)
 - `tablesAll({ database: "",windowsPath?: ""}):Promise<string[]>` Get the tables in an mdb file (include system tables)
@@ -121,6 +125,8 @@ console.log(s);
 
 `A simple SQL engine`
 
+Requires: mdbtools 0.3+
+
 - `sql({ database: "",windowsPath?: "", query: ""}):Promise<Record<string, unknown>[]>` Get a SQL Query result
 
 Examples:
@@ -148,6 +154,8 @@ console.log(result);
 
 `Count rows in a table`
 
+Requires: mdbtools 0.9+
+
 - `count({ database: "",windowsPath?: "", table: ""}):Promise<number>` Get the number of rows in a table
 
 Examples:
@@ -161,6 +169,30 @@ const c = await count({ database, windowsPath, table });
 console.log(c);
 // 7
 ```
+
+### API: mdb-json
+
+`Export a table to a JSON file`
+
+Requires: mdbtools 0.9+
+
+TO DO
+
+### API: mdb-export
+
+`Export a table to a CSV file`
+
+Requires: mdbtools 0.1+
+
+TO DO
+
+### API: mdb-schema
+
+`Generate schema creation DDL`
+
+Requires: mdbtools 0.1+
+
+TO DO
 
 ### Acknowledgments
 
