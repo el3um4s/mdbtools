@@ -7,6 +7,7 @@ import {
   queries,
   queriesSQL,
   sql,
+  count,
 } from "../index";
 
 describe("mdb-ver", () => {
@@ -130,5 +131,15 @@ describe("mdb-sql", () => {
       },
     ];
     expect(q.sort()).toEqual(expected.sort());
+  });
+});
+
+describe("mdb-count", () => {
+  test("mdb-count test.mdb colors", async () => {
+    const windowsPath = "./mdbtools-win";
+    const database = "./src/__tests__/test.mdb";
+    const table = "Colors";
+    const c = await count({ database, windowsPath, table });
+    expect(c).toEqual(7);
   });
 });

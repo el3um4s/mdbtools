@@ -144,6 +144,24 @@ console.log(result);
 // ]
 ```
 
+### API: mdb-count
+
+`Count rows in a table`
+
+- `count({ database: "",windowsPath?: "", table: ""}):Promise<number>` Get the number of rows in a table
+
+Examples:
+
+```ts
+const windowsPath = "./mdbtools-win";
+const database = "./src/__tests__/test.mdb";
+const table = "Colors";
+
+const c = await count({ database, windowsPath, table });
+console.log(c);
+// 7
+```
+
 ### Acknowledgments
 
 Sample database used for tests and examples is from [mdb](https://github.com/maxogden/node-mdb).
