@@ -97,7 +97,7 @@ console.log(listSystem);
 
 `List queries from an Access database`
 
-Requires: mdbtools >= 0.9
+Requires: mdbtools 0.9+
 
 - `queries({ database: "",windowsPath?: ""}):Promise<string[]>` Get the queries in an mdb file
 - `queriesSQL({ database: "",windowsPath?: ""}, query: ""):Promise<string>` Get the query SQL string
@@ -112,9 +112,36 @@ const listQueries = await queries({ database, windowsPath });
 console.log(listQueries);
 // [ "UserA", "MainColors", "ChangeValueDogTo40", "ChangeValueDotTo4", "AddApple", "DeleteApple", "aàeèéiìoòuù"]
 
-const sql = await queriesSQL({ database, windowsPath, query: "UserA" });
-console.log(sql);
+const s = await queriesSQL({ database, windowsPath, query: "UserA" });
+console.log(s);
 // SELECT Users.* FROM [Users] WHERE (((Users.UserCategory)="A"))
+```
+
+### API: mdb-sql
+
+`A simple SQL engine`
+
+- `sql({ database: "",windowsPath?: "", query: ""}):Promise<Record<string, unknown>[]>` Get a SQL Query result
+
+Examples:
+
+```ts
+const windowsPath = "./mdbtools-win";
+const database = "./src/__tests__/test.mdb";
+const s = "SELECT * FROM Colors WHERE Value > 10;";
+
+const result = await sql({ database, windowsPath, sql: s });
+console.log(result);
+// [
+//     {
+//       Colors: "Blue",
+//       Value: "16",
+//     },
+//     {
+//       Colors: "Yellow",
+//       Value: "12",
+//     },
+// ]
 ```
 
 ### Acknowledgments

@@ -6,6 +6,7 @@ import {
   tablesSystem,
   queries,
   queriesSQL,
+  sql,
 } from "../index";
 
 describe("mdb-ver", () => {
@@ -108,5 +109,26 @@ describe("mdb-queries", () => {
     expect(q.trim()).toEqual(
       `SELECT Users.* FROM [Users] WHERE (((Users.UserCategory)="A"))`.trim()
     );
+  });
+});
+
+describe("mdb-sql", () => {
+  test(`"SELECT * FROM Colors WHERE Value > 10;" | mdb-sql test.mdb`, async () => {
+    const windowsPath = "./mdbtools-win";
+    const database = "./src/__tests__/test.mdb";
+    const s = "SELECT * FROM Colors WHERE Value > 10;";
+    // const s = "SELECT * FROM Users WHERE  UserValue < 10;";
+    const q = await sql({ database, windowsPath, sql: s });
+    const expected = [
+      {
+        Colors: "Blue",
+        Value: "16",
+      },
+      {
+        Colors: "Yellow",
+        Value: "12",
+      },
+    ];
+    expect(q.sort()).toEqual(expected.sort());
   });
 });
