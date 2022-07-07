@@ -2,7 +2,7 @@
 
 [mdbtools](https://github.com/mdbtools/mdbtools) for Node to use MS Access database.
 
-These aren't native bindings, they just talk to stdin/stdout/stderr of mdbtools (specifically mdb-tables and mdb-export).
+These aren't native bindings, they just talk to stdin/stdout/stderr of mdbtools.
 
 NPM link: [@el3um4s/mdbtools](https://www.npmjs.com/package/@el3um4s/mdbtools)
 
@@ -176,7 +176,27 @@ console.log(c);
 
 Requires: mdbtools 0.9+
 
-TO DO
+- `tableToJson({ database: "",windowsPath?: "", table: ""}):Promise<Record<string, unknown>[]>` Export a table to a JSON array
+
+Examples:
+
+```ts
+const windowsPath = "./mdbtools-win";
+const database = "./src/__tests__/test.mdb";
+const table = "Colors";
+
+const result = await tableToJson({ database, windowsPath, table });
+console.log(result);
+// [
+//     { Colors: "Red", Value: 10 },
+//     { Colors: "Green", Value: 5 },
+//     { Colors: "Blue", Value: 16 },
+//     { Colors: "Black", Value: 1 },
+//     { Colors: "Yellow", Value: 12 },
+//     { Colors: "White", Value: 10 },
+//     { Colors: "Others", Value: 0 },
+// ]
+```
 
 ### API: mdb-export
 

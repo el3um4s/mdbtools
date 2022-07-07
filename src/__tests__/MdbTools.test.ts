@@ -8,6 +8,7 @@ import {
   queriesSQL,
   sql,
   count,
+  tableToJson,
 } from "../index";
 
 describe("mdb-ver", () => {
@@ -141,5 +142,24 @@ describe("mdb-count", () => {
     const table = "Colors";
     const c = await count({ database, windowsPath, table });
     expect(c).toEqual(7);
+  });
+});
+
+describe("mdb-json", () => {
+  test("mdb-json test.mdb Colors", async () => {
+    const windowsPath = "./mdbtools-win";
+    const database = "./src/__tests__/test.mdb";
+    const table = "Colors";
+    const j = await tableToJson({ database, windowsPath, table });
+    const expected = [
+      { Colors: "Red", Value: 10 },
+      { Colors: "Green", Value: 5 },
+      { Colors: "Blue", Value: 16 },
+      { Colors: "Black", Value: 1 },
+      { Colors: "Yellow", Value: 12 },
+      { Colors: "White", Value: 10 },
+      { Colors: "Others", Value: 0 },
+    ];
+    expect(j).toEqual(expected.sort());
   });
 });
