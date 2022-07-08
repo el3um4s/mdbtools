@@ -4,6 +4,7 @@ import { queries, queriesSQL } from "./functions/mdb-queries";
 import { sql } from "./functions/mdb-sql";
 import { count } from "./functions/mdb-count";
 import { tableToJson } from "./functions/mdb-json";
+import { tableToCSV } from "./functions/mdb-export";
 
 export {
   versionMdbTools,
@@ -16,4 +17,5 @@ export {
   sql,
   count,
   tableToJson,
+  tableToCSV,
 };

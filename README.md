@@ -172,7 +172,7 @@ console.log(c);
 
 ### API: mdb-json
 
-`Export a table to a JSON file`
+`Export a table to a JSON array`
 
 Requires: mdbtools 0.9+
 
@@ -200,11 +200,30 @@ console.log(result);
 
 ### API: mdb-export
 
-`Export a table to a CSV file`
+`Export a table to a CSV string`
 
 Requires: mdbtools 0.1+
 
-TO DO
+- `tableToCSV({ database: "",windowsPath?: "", table: ""}):Promise<string>` Export a table to a CSV string
+
+Examples:
+
+```ts
+const windowsPath = "./mdbtools-win";
+const database = "./src/__tests__/test.mdb";
+const table = "Colors";
+
+const result = await tableToCSV({ database, windowsPath, table });
+console.log(result);
+// Colors,Value
+// "Red",10
+// "Green",5
+// "Blue",16
+// "Black",1
+// "Yellow",12
+// "White",10
+// "Others",0
+```
 
 ### API: mdb-schema
 

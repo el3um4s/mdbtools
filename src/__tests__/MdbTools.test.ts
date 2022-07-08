@@ -9,6 +9,7 @@ import {
   sql,
   count,
   tableToJson,
+  tableToCSV,
 } from "../index";
 
 describe("mdb-ver", () => {
@@ -161,5 +162,23 @@ describe("mdb-json", () => {
       { Colors: "Others", Value: 0 },
     ];
     expect(j).toEqual(expected.sort());
+  });
+});
+
+describe("mdb-export", () => {
+  test("mdb-export test.mdb colors", async () => {
+    const windowsPath = "./mdbtools-win";
+    const database = "./src/__tests__/test.mdb";
+    const table = "Colors";
+    const csv = await tableToCSV({ database, windowsPath, table });
+    const expected = `Colors,Value
+"Red",10
+"Green",5
+"Blue",16
+"Black",1
+"Yellow",12
+"White",10
+"Others",0`;
+    expect(csv).toEqual(expected.trim());
   });
 });
