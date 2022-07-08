@@ -290,11 +290,29 @@ Options:
 
 ### API: mdb-schema
 
-`Generate schema creation DDL`
+`Generate DDL for the tables`
 
 Requires: mdbtools 0.1+
 
-TO DO
+- `schema({ database: "",windowsPath?: "", table: ""}):Promise<string>` Generate DLL schema for all tables
+- `schemaTable({ database: "",windowsPath?: "", table: ""}):Promise<string>` Generate schema only for a table
+
+examples:
+
+```ts
+const windowsPath = "./mdbtools-win";
+const database = "./src/__tests__/test.mdb";
+const s = await schema({ database, windowsPath });
+
+const table = "Colors";
+const schemaT = await schemaTable({ database, windowsPath, table });
+console.log(schemaT);
+// CREATE TABLE [Colors]
+//  (
+//     [Colors]           Text (50),
+//     [Value]            Long Integer
+// );
+```
 
 ### Acknowledgments
 

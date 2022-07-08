@@ -15,6 +15,8 @@ import {
   tablesToFile,
   tablesAllToFile,
   tableToCSVFile,
+  schema,
+  schemaTable,
 } from "../index";
 
 describe("mdb-ver", () => {
@@ -244,5 +246,21 @@ describe("mdb-export", () => {
     });
 
     expect(t).toBeTruthy();
+  });
+});
+
+describe("mdb-schema", () => {
+  test("mdb-schema test.mdb", async () => {
+    const windowsPath = "./mdbtools-win";
+    const database = "./src/__tests__/test.mdb";
+    const s = await schema({ database, windowsPath });
+    expect(s.length).toBeGreaterThan(0);
+  });
+  test("mdb-schema test.mdb Colors", async () => {
+    const windowsPath = "./mdbtools-win";
+    const database = "./src/__tests__/test.mdb";
+    const table = "Colors";
+    const s = await schemaTable({ database, windowsPath, table });
+    expect(s.length).toBeGreaterThan(0);
   });
 });
