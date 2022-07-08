@@ -14,6 +14,7 @@ import {
   tableToCSV,
   tablesToFile,
   tablesAllToFile,
+  tableToCSVFile,
 } from "../index";
 
 describe("mdb-ver", () => {
@@ -226,5 +227,22 @@ describe("mdb-export", () => {
 "White",10
 "Others",0`;
     expect(csv).toEqual(expected.trim());
+  });
+
+  test("mdb-export test.mdb colors > test-export-colors.csv", async () => {
+    const windowsPath = "./mdbtools-win";
+    const database = "./src/__tests__/test.mdb";
+    const table = "Colors";
+    const file = "./src/__tests__/__to_file__/test-export-colors.csv";
+    const options = "-d; -Q";
+    const t = await tableToCSVFile({
+      database,
+      windowsPath,
+      table,
+      file,
+      options,
+    });
+
+    expect(t).toBeTruthy();
   });
 });

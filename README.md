@@ -240,6 +240,7 @@ console.log(result);
 Requires: mdbtools 0.1+
 
 - `tableToCSV({ database: "",windowsPath?: "", table: ""}):Promise<string>` Export a table to a CSV string
+- `tableToCSVFile({ database: "",windowsPath?: "", table: "", file: "", options:""}):Promise<boolean>` Export a table to a CSV file
 
 Examples:
 
@@ -258,7 +259,34 @@ console.log(result);
 // "Yellow",12
 // "White",10
 // "Others",0
+
+const file = "./src/__tests__/__to_file__/test-export-colors.csv";
+const options = "-d; -Q";
+const t = await tableToCSVFile({
+  database,
+  windowsPath,
+  table,
+  file,
+  options,
+});
+console.log(t);
+// true
 ```
+
+Options:
+
+| short | long                  | description                                                                   |
+| ----- | --------------------- | ----------------------------------------------------------------------------- |
+| -H    | --no-header           | Suppress header row.                                                          |
+| -d    | --delimiter=char      | Specify an alternative column delimiter. Default is comma.                    |
+| -R    | --row-delimiter=char  | Specify a row delimiter                                                       |
+| -Q    | --no-quote            | Don't wrap text-like fields in quotes.                                        |
+| -q    | --quote=char          | Use `<char>` to wrap text-like fields. Default is double quote.               |
+| -X    | --escape=format       | Use `<char>` to escape quoted characters within a field. Default is doubling. |
+| -I    | --insert=backend      | INSERT statements (instead of CSV)                                            |
+| -N    | --namespace=namespace | Prefix identifiers with namespace                                             |
+| -0    | --null=char           | Use `<char>` to represent a NULL value                                        |
+| -B    | --boolean-words       | Use TRUE/FALSE in Boolean fields (default is 0/1)                             |
 
 ### API: mdb-schema
 

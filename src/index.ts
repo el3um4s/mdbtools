@@ -15,7 +15,7 @@ import {
 import { sql } from "./functions/mdb-sql";
 import { count } from "./functions/mdb-count";
 import { tableToJson } from "./functions/mdb-json";
-import { tableToCSV } from "./functions/mdb-export";
+import { tableToCSV, tableToCSVFile } from "./functions/mdb-export";
 
 export {
   versionMdbTools,
@@ -33,4 +33,5 @@ export {
   count,
   tableToJson,
   tableToCSV,
+  tableToCSVFile,
 };
