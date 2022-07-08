@@ -1,5 +1,5 @@
-import { engine } from "./engine";
-import { launchCommand } from "./launchCommand";
+import { engine } from "./spawn/engine";
+import { launchCommand } from "./spawn/launchCommand";
 
 import path = require("node:path");
 
