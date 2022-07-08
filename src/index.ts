@@ -16,7 +16,12 @@ import { sql } from "./functions/mdb-sql";
 import { count } from "./functions/mdb-count";
 import { tableToJson } from "./functions/mdb-json";
 import { tableToCSV, tableToCSVFile } from "./functions/mdb-export";
-import { schema, schemaTable } from "./functions/mdb-schema";
+import {
+  schema,
+  schemaTable,
+  schemaToFile,
+  schemaTableToFile,
+} from "./functions/mdb-schema";
 
 export {
   versionMdbTools,
@@ -37,4 +42,6 @@ export {
   tableToCSVFile,
   schema,
   schemaTable,
+  schemaToFile,
+  schemaTableToFile,
 };

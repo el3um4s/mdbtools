@@ -17,6 +17,8 @@ import {
   tableToCSVFile,
   schema,
   schemaTable,
+  schemaToFile,
+  schemaTableToFile,
 } from "../index";
 
 describe("mdb-ver", () => {
@@ -262,5 +264,39 @@ describe("mdb-schema", () => {
     const table = "Colors";
     const s = await schemaTable({ database, windowsPath, table });
     expect(s.length).toBeGreaterThan(0);
+  });
+
+  test("mdb-schema test.mdb Colors Table Two ", async () => {
+    const windowsPath = "./mdbtools-win";
+    const database = "./src/__tests__/test.mdb";
+    const table = "Colors Table Two";
+    const s = await schemaTable({ database, windowsPath, table });
+    expect(s.length).toBeGreaterThan(0);
+  });
+
+  test("mdb-schema test.mdb  > schema-test.csv", async () => {
+    const windowsPath = "./mdbtools-win";
+    const database = "./src/__tests__/test.mdb";
+    const file = "./src/__tests__/__to_file__/schema-test.csv";
+    const s = await schemaToFile({ database, windowsPath, file });
+    expect(s).toBeTruthy();
+  });
+
+  test("mdb-schema test.mdb Colors  > schema-test-color.csv", async () => {
+    const windowsPath = "./mdbtools-win";
+    const database = "./src/__tests__/test.mdb";
+    const table = "Colors";
+    const file = "./src/__tests__/__to_file__/schema-test-color.csv";
+    const s = await schemaTableToFile({ database, windowsPath, table, file });
+    expect(s).toBeTruthy();
+  });
+
+  test("mdb-schema test.mdb Colors Table Two  > schema-test-color-2.csv", async () => {
+    const windowsPath = "./mdbtools-win";
+    const database = "./src/__tests__/test.mdb";
+    const table = "Colors Table Two";
+    const file = "./src/__tests__/__to_file__/schema-test-color-2.csv";
+    const s = await schemaTableToFile({ database, windowsPath, table, file });
+    expect(s).toBeTruthy();
   });
 });

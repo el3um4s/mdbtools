@@ -296,6 +296,8 @@ Requires: mdbtools 0.1+
 
 - `schema({ database: "",windowsPath?: "", table: ""}):Promise<string>` Generate DLL schema for all tables
 - `schemaTable({ database: "",windowsPath?: "", table: ""}):Promise<string>` Generate schema only for a table
+- `schemaToFile({ database: "",windowsPath?: "", table: "", file: ""}):Promise<boolean>` Export DLL schema for all tables to file
+- `schemaTableToFile({ database: "",windowsPath?: "", table: "", file: ""}):Promise<boolean>` Export DLL schema only for a table to file
 
 examples:
 
