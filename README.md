@@ -74,13 +74,15 @@ console.log(v);
 
 ### API: mdb-tables
 
-`list tables in the specified file`
+`List tables in the specified file`
 
 Requires: mdbtools 0.3+
 
 - `tables({ database: "",windowsPath?: ""}):Promise<string[]>` Get the tables in an mdb file (exclude system tables)
 - `tablesAll({ database: "",windowsPath?: ""}):Promise<string[]>` Get the tables in an mdb file (include system tables)
 - `tablesSystem({ database: "",windowsPath?: ""}):Promise<string[]>` Get the tables in an mdb file (only system tables)
+- `tablesToFile({ database: "",windowsPath?: "", file: string}):Promise<boolean>` Save the list of tables in a file (exclude system tables)
+- `tablesAllToFile({ database: "",windowsPath?: "", file: string}):Promise<boolean>` Save the list of tables in a file (include system tables)
 
 Examples:
 
@@ -95,6 +97,21 @@ console.log(list);
 const listSystem = await tablesSystem({ database });
 console.log(listSystem);
 // [ "MSysObjects", "MSysACEs", "MSysQueries", "MSysRelationships", "MSysAccessObjects", "MSysNavPaneGroupCategories", "MSysNavPaneGroups", "MSysNavPaneGroupToObjects", "MSysNavPaneObjectIDs", "MSysAccessXML", "MSysNameMap" ]
+
+const file = "./src/__tests__/__to_file__/tables-fruit.txt";
+const t = await tablesToFile({ database, windowsPath, file });
+console.log(t);
+// true
+
+const fileWithSystem =
+  "./src/__tests__/__to_file__/tables-fruit-with-system-tables.txt";
+const ts = await tablesAllToFile({
+  database,
+  windowsPath,
+  file: fileWithSystem,
+});
+console.log(ts);
+// true
 ```
 
 ### API: mdb-queries
@@ -104,7 +121,9 @@ console.log(listSystem);
 Requires: mdbtools 0.9+
 
 - `queries({ database: "",windowsPath?: ""}):Promise<string[]>` Get the queries in an mdb file
-- `queriesSQL({ database: "",windowsPath?: ""}, query: ""):Promise<string>` Get the query SQL string
+- `queriesSQL({ database: "",windowsPath?: "", query: ""}):Promise<string>` Get the query SQL string
+- `queriesToFile({ database: "",windowsPath?: "", file: string}):Promise<boolean>` Save the list of queries in a file
+- `queriesSQLToFile({ database: "",windowsPath?: "", query: "", file: string}):Promise<boolean>` Save the query SQL string in a file
 
 Examples:
 
@@ -119,6 +138,22 @@ console.log(listQueries);
 const s = await queriesSQL({ database, windowsPath, query: "UserA" });
 console.log(s);
 // SELECT Users.* FROM [Users] WHERE (((Users.UserCategory)="A"))
+
+const file = "./src/__tests__/__to_file__/test-queries.txt";
+const t = await queriesToFile({ database, windowsPath, file });
+console.log(t);
+// true
+
+const query = "UserA";
+const fileQuery = "./src/__tests__/__to_file__/test-queries-usera.txt";
+const tq = await queriesSQLToFile({
+  database,
+  windowsPath,
+  query,
+  file: fileQuery,
+});
+console.log(tq);
+// true
 ```
 
 ### API: mdb-sql

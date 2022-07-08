@@ -6,10 +6,14 @@ import {
   tablesSystem,
   queries,
   queriesSQL,
+  queriesToFile,
+  queriesSQLToFile,
   sql,
   count,
   tableToJson,
   tableToCSV,
+  tablesToFile,
+  tablesAllToFile,
 } from "../index";
 
 describe("mdb-ver", () => {
@@ -85,6 +89,29 @@ describe("mdb-tables", () => {
     ];
     expect(t.sort()).toEqual(expected.sort());
   });
+
+  test("mdb-tables fruit.mdb > tables-fruit.txt", async () => {
+    const windowsPath = "./mdbtools-win";
+    const database = "./src/__tests__/fruit.mdb";
+    const file = "./src/__tests__/__to_file__/tables-fruit.txt";
+    const t = await tablesToFile({ database, windowsPath, file });
+
+    expect(t).toBeTruthy();
+  });
+
+  test("mdb-tables fruit.mdb -S > tables-fruit-with-system-tables.txt", async () => {
+    const windowsPath = "./mdbtools-win";
+    const database = "./src/__tests__/fruit.mdb";
+    const fileWithSystem =
+      "./src/__tests__/__to_file__/tables-fruit-with-system-tables.txt";
+    const t = await tablesAllToFile({
+      database,
+      windowsPath,
+      file: fileWithSystem,
+    });
+
+    expect(t).toBeTruthy();
+  });
 });
 
 describe("mdb-queries", () => {
@@ -104,7 +131,7 @@ describe("mdb-queries", () => {
     expect(q.sort()).toEqual(expected.sort());
   });
 
-  test("mdb-queries test.mdb users", async () => {
+  test("mdb-queries test.mdb UserA", async () => {
     const windowsPath = "./mdbtools-win";
     const database = "./src/__tests__/test.mdb";
     const query = "UserA";
@@ -112,6 +139,25 @@ describe("mdb-queries", () => {
     expect(q.trim()).toEqual(
       `SELECT Users.* FROM [Users] WHERE (((Users.UserCategory)="A"))`.trim()
     );
+  });
+
+  test("mdb-queries test.mdb > test-queries.txt", async () => {
+    const windowsPath = "./mdbtools-win";
+    const database = "./src/__tests__/test.mdb";
+    const file = "./src/__tests__/__to_file__/test-queries.txt";
+    const t = await queriesToFile({ database, windowsPath, file });
+
+    expect(t).toBeTruthy();
+  });
+
+  test("mdb-queries test.mdb UserA > test-queries-usera.txt", async () => {
+    const windowsPath = "./mdbtools-win";
+    const database = "./src/__tests__/test.mdb";
+    const query = "UserA";
+    const file = "./src/__tests__/__to_file__/test-queries-usera.txt";
+    const t = await queriesSQLToFile({ database, windowsPath, query, file });
+
+    expect(t).toBeTruthy();
   });
 });
 

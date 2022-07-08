@@ -1,0 +1,7 @@
+UserA
+MainColors
+ChangeValueDogTo40
+ChangeValueDotTo4
+AddApple
+DeleteApple
+aàeèéiìoòuù

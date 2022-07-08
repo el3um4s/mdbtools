@@ -1,5 +1,6 @@
 import { engine } from "./spawn/engine";
 import { launchCommand } from "./spawn/launchCommand";
+import { printCommand } from "./spawn/printCommand";
 
 import path = require("node:path");
 
@@ -80,4 +81,50 @@ const tablesSystem = async (
   return listTables;
 };
 
-export { tables, tablesAll, tablesSystem };
+const tablesToFile = async (
+  data: { database: string; windowsPath?: string; file: string } = {
+    database: "",
+    windowsPath: "",
+    file: "",
+  }
+): Promise<boolean> => {
+  const { database, windowsPath, file } = data;
+  const command = engine({
+    windowsPath: windowsPath ? windowsPath : "",
+    command: "mdb-tables",
+  });
+  const pathDatabase = path.resolve(database);
+  const pathToFile = path.resolve(file);
+  const result = await printCommand({
+    command: command,
+    args: [pathDatabase, "-1"],
+    file: pathToFile,
+  });
+
+  return result;
+};
+
+const tablesAllToFile = async (
+  data: { database: string; windowsPath?: string; file: string } = {
+    database: "",
+    windowsPath: "",
+    file: "",
+  }
+): Promise<boolean> => {
+  const { database, windowsPath, file } = data;
+  const command = engine({
+    windowsPath: windowsPath ? windowsPath : "",
+    command: "mdb-tables",
+  });
+  const pathDatabase = path.resolve(database);
+  const pathToFile = path.resolve(file);
+  const result = await printCommand({
+    command: command,
+    args: [pathDatabase, "-1", "-S"],
+    file: pathToFile,
+  });
+
+  return result;
+};
+
+export { tables, tablesAll, tablesSystem, tablesToFile, tablesAllToFile };

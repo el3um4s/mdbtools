@@ -1,0 +1,16 @@
+MSysObjects
+MSysACEs
+MSysQueries
+MSysRelationships
+MSysAccessObjects
+Fruit
+Fruit Salad
+Veggie Salad
+Muffin/Bread
+Dried
+MSysNavPaneGroupCategories
+MSysNavPaneGroups
+MSysNavPaneGroupToObjects
+MSysNavPaneObjectIDs
+MSysAccessXML
+MSysNameMap
