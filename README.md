@@ -118,6 +118,8 @@ console.log(ts);
 
 `List queries from an Access database`
 
+_The currently implemented SQL subset is quite small, supporting only single table queries, no aggregates, and limited support for WHERE clauses._
+
 Requires: mdbtools 0.9+
 
 - `queries({ database: "",windowsPath?: ""}):Promise<string[]>` Get the queries in an mdb file
@@ -159,6 +161,8 @@ console.log(tq);
 ### API: mdb-sql
 
 `A simple SQL engine`
+
+_The currently implemented SQL subset is quite small, supporting only single table queries, no aggregates, and limited support for WHERE clauses._
 
 Requires: mdbtools 0.3+
 
