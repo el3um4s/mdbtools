@@ -15,7 +15,7 @@ const printCommand = (cmd: Cmd): Promise<boolean> => {
   return new Promise((resolve, reject) => {
     let result = true;
 
-    const child = spawn(command, [...args, ">", file], {
+    const child = spawn(command, [...args, ">", `"${file}"`], {
       windowsHide: true,
       shell: true,
       ...options,

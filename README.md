@@ -162,8 +162,12 @@ console.log(tq);
 
 Requires: mdbtools 0.3+
 
-- `sqlAsString({ database: "",windowsPath?: "", query: ""}):Promise<string>[]>` Get a SQL Query result (like a sring)
+- `sqlAsString({ database: "",windowsPath?: "", query: ""}):Promise<string>[]>` Get a SQL Query result (like a string)
 - `sql({ database: "",windowsPath?: "", query: ""}):Promise<Record<string, unknown>[]>` Get a SQL Query result (like a JSON array)
+- `sqlToFile({ database: "",windowsPath?: "", query: "", file: ""}):Promise<boolean>` Save a SQL Query result in a file
+- `sqlFromFile({ database: "",windowsPath?: "", inputFile: ""}):Promise<Record<string, unknown>[]>` Get a SQL Query from a file and return the result (like a JSON array)
+- `sqlFromFileAsString({ database: "",windowsPath?: "", inputFile: ""}):Promise<string>` Get a SQL Query from a file and return the result (like a string)
+- `sqlFromFileToFile({ database: "",windowsPath?: "", inputFile:"", file: ""}):Promise<boolean>` Get a SQL Query from a file and save the result in a file
 
 Examples:
 
@@ -190,6 +194,35 @@ console.log(resultAsString);
 // Colors      Value
 // Blue        16
 // Yellow      12
+
+const file = "./src/__tests__/__to_file__/sql result to file.csv";
+const q = await sqlToFile({ database, windowsPath, sql: s, file });
+console.log(q);
+// true
+
+const inputFile = "./src/__tests__/__to_file__/select colors.sql";
+const f = await sqlFromFile({ database, windowsPath, inputFile });
+console.log(f);
+// [
+//     {
+//       Colors: "Blue",
+//       Value: "16",
+//     },
+//     {
+//       Colors: "Yellow",
+//       Value: "12",
+//     },
+// ]
+
+const fileResult = "./src/__tests__/__to_file__/sql from file to file.csv";
+const rf = await sqlFromFileToFile({
+  database,
+  windowsPath,
+  inputFile,
+  file: fileResult,
+});
+console.log(rf);
+// true
 ```
 
 ### API: mdb-count

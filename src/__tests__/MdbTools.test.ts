@@ -10,6 +10,10 @@ import {
   queriesSQLToFile,
   sql,
   sqlAsString,
+  sqlToFile,
+  sqlFromFile,
+  sqlFromFileAsString,
+  sqlFromFileToFile,
   count,
   tableToJson,
   tableToCSV,
@@ -196,6 +200,58 @@ describe("mdb-sql", () => {
     const q = await sqlAsString({ database, windowsPath, sql: s });
     const expected = `ColorsValueBlue16Yellow12`;
     expect(q.replace(/(\r\n|\n|\r| |\t)/gm, "").trim()).toEqual(expected);
+  });
+
+  test(`"SELECT * FROM Colors WHERE Value > 10;" | mdb-sql test.mdb > "sql result to file.csv"`, async () => {
+    const windowsPath = "./mdbtools-win";
+    const database = "./src/__tests__/test.mdb";
+    const s = "SELECT * FROM Colors WHERE Value > 10;";
+    const file = "./src/__tests__/__to_file__/sql result to file.csv";
+    const q = await sqlToFile({ database, windowsPath, sql: s, file });
+
+    expect(q).toBeTruthy();
+  });
+
+  test(`mdb-sql test.mdb --input="select colors.sql" AS STRING`, async () => {
+    const windowsPath = "./mdbtools-win";
+    const database = "./src/__tests__/test.mdb";
+    const inputFile = "./src/__tests__/__to_file__/select colors.sql";
+    const q = await sqlFromFileAsString({ database, windowsPath, inputFile });
+    const expected = `ColorsValueBlue16Yellow12`;
+    expect(q.replace(/(\r\n|\n|\r| |\t)/gm, "").trim()).toEqual(expected);
+  });
+
+  test(`mdb-sql test.mdb --input="select colors.sql"`, async () => {
+    const windowsPath = "./mdbtools-win";
+    const database = "./src/__tests__/test.mdb";
+    const inputFile = "./src/__tests__/__to_file__/select colors.sql";
+    const q = await sqlFromFile({ database, windowsPath, inputFile });
+    const expected = [
+      {
+        Colors: "Blue",
+        Value: "16",
+      },
+      {
+        Colors: "Yellow",
+        Value: "12",
+      },
+    ];
+    expect(q.sort()).toEqual(expected.sort());
+  });
+
+  test(`mdb-sql test.mdb --input="select colors.sql" > "sql from file to file.csv"`, async () => {
+    const windowsPath = "./mdbtools-win";
+    const database = "./src/__tests__/test.mdb";
+    const inputFile = "./src/__tests__/__to_file__/select colors.sql";
+    const file = "./src/__tests__/__to_file__/sql from file to file.csv";
+    const q = await sqlFromFileToFile({
+      database,
+      windowsPath,
+      inputFile,
+      file,
+    });
+
+    expect(q).toBeTruthy();
   });
 });
 

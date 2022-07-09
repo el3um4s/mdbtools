@@ -12,7 +12,14 @@ import {
   queriesToFile,
   queriesSQLToFile,
 } from "./functions/mdb-queries";
-import { sql, sqlAsString } from "./functions/mdb-sql";
+import {
+  sql,
+  sqlAsString,
+  sqlToFile,
+  sqlFromFile,
+  sqlFromFileAsString,
+  sqlFromFileToFile,
+} from "./functions/mdb-sql";
 import { count } from "./functions/mdb-count";
 import { tableToJson } from "./functions/mdb-json";
 import { tableToCSV, tableToCSVFile } from "./functions/mdb-export";
@@ -42,6 +49,10 @@ export {
   queriesSQLToFile,
   sqlAsString,
   sql,
+  sqlToFile,
+  sqlFromFile,
+  sqlFromFileAsString,
+  sqlFromFileToFile,
   count,
   tableToJson,
   tableToCSV,
