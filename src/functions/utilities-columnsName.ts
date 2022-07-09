@@ -1,5 +1,5 @@
 import { sqlAsString } from "./mdb-sql";
-import { tables, tablesAll, tablesSystem } from "./mdb-tables";
+import { tables } from "./mdb-tables";
 
 import { titleCSVToJSON } from "./utilities/CSVToJSON";
 

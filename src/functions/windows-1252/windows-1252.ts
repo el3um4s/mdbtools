@@ -285,7 +285,7 @@ const encodingError = (mode: string) => {
 
 // https://encoding.spec.whatwg.org/#single-byte-decoder
 export const decode = (
-  input: string | any[] | Uint16Array,
+  input: string | Uint16Array,
   options: { mode?: string } | undefined
 ) => {
   let mode;
