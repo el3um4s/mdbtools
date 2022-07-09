@@ -162,7 +162,8 @@ console.log(tq);
 
 Requires: mdbtools 0.3+
 
-- `sql({ database: "",windowsPath?: "", query: ""}):Promise<Record<string, unknown>[]>` Get a SQL Query result
+- `sqlAsString({ database: "",windowsPath?: "", query: ""}):Promise<string>[]>` Get a SQL Query result (like a sring)
+- `sql({ database: "",windowsPath?: "", query: ""}):Promise<Record<string, unknown>[]>` Get a SQL Query result (like a JSON array)
 
 Examples:
 
@@ -183,6 +184,12 @@ console.log(result);
 //       Value: "12",
 //     },
 // ]
+
+const resultAsString = await sqlAsString({ database, windowsPath, sql: s });
+console.log(resultAsString);
+// Colors      Value
+// Blue        16
+// Yellow      12
 ```
 
 ### API: mdb-count
@@ -299,7 +306,7 @@ Requires: mdbtools 0.1+
 - `schemaToFile({ database: "",windowsPath?: "", table: "", file: ""}):Promise<boolean>` Export DLL schema for all tables to file
 - `schemaTableToFile({ database: "",windowsPath?: "", table: "", file: ""}):Promise<boolean>` Export DLL schema only for a table to file
 
-examples:
+Examples:
 
 ```ts
 const windowsPath = "./mdbtools-win";
@@ -314,6 +321,44 @@ console.log(schemaT);
 //     [Colors]           Text (50),
 //     [Value]            Long Integer
 // );
+```
+
+### API: utilities-columnsName
+
+`Get the columns name of a table`
+
+Requires: mdbtools 0.3+
+
+- `columnsName({ database: "",windowsPath?: "", table: ""}):Promise<string[]>` Get the columns name of a table
+- `columnsNameTables({ database: "",windowsPath?: ""}):Promise<Record<string, string[]>>` Get the columns name of all tables
+
+Examples:
+
+```ts
+const windowsPath = "./mdbtools-win";
+const database = "./src/__tests__/test.mdb";
+const table = "Colors";
+
+const columns = await columnsName({ database, windowsPath, table });
+console.log(columns);
+// [ "Colors", "Value" ]
+
+const allColumns = await columnsNameTables({ database, windowsPath });
+console.log(allColumns);
+// {
+//   Users: [
+//     "UserID",
+//     "UserName",
+//     "UserSex",
+//     "UserBirthday",
+//     "UserTelephone",
+//     "UserValue",
+//     "UserCategory",
+//   ],
+//   Colors: ["Colors", "Value"],
+//   Dictionary: ["Number", "Word"],
+//   "Colors Table Two": ["Colors", "Value"],
+// }
 ```
 
 ### Acknowledgments

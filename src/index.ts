@@ -12,7 +12,7 @@ import {
   queriesToFile,
   queriesSQLToFile,
 } from "./functions/mdb-queries";
-import { sql } from "./functions/mdb-sql";
+import { sql, sqlAsString } from "./functions/mdb-sql";
 import { count } from "./functions/mdb-count";
 import { tableToJson } from "./functions/mdb-json";
 import { tableToCSV, tableToCSVFile } from "./functions/mdb-export";
@@ -22,6 +22,11 @@ import {
   schemaToFile,
   schemaTableToFile,
 } from "./functions/mdb-schema";
+
+import {
+  columnsName,
+  columnsNameTables,
+} from "./functions/utilities-columnsName";
 
 export {
   versionMdbTools,
@@ -35,6 +40,7 @@ export {
   queriesSQL,
   queriesToFile,
   queriesSQLToFile,
+  sqlAsString,
   sql,
   count,
   tableToJson,
@@ -44,4 +50,6 @@ export {
   schemaTable,
   schemaToFile,
   schemaTableToFile,
+  columnsName,
+  columnsNameTables,
 };

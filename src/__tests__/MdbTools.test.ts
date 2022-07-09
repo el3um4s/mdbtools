@@ -9,6 +9,7 @@ import {
   queriesToFile,
   queriesSQLToFile,
   sql,
+  sqlAsString,
   count,
   tableToJson,
   tableToCSV,
@@ -19,6 +20,8 @@ import {
   schemaTable,
   schemaToFile,
   schemaTableToFile,
+  columnsName,
+  columnsNameTables,
 } from "../index";
 
 describe("mdb-ver", () => {
@@ -171,7 +174,7 @@ describe("mdb-sql", () => {
     const windowsPath = "./mdbtools-win";
     const database = "./src/__tests__/test.mdb";
     const s = "SELECT * FROM Colors WHERE Value > 10;";
-    // const s = "SELECT * FROM Users WHERE  UserValue < 10;";
+
     const q = await sql({ database, windowsPath, sql: s });
     const expected = [
       {
@@ -184,6 +187,15 @@ describe("mdb-sql", () => {
       },
     ];
     expect(q.sort()).toEqual(expected.sort());
+  });
+
+  test(`"SELECT * FROM Colors WHERE Value > 10;" | mdb-sql test.mdb AS STRING`, async () => {
+    const windowsPath = "./mdbtools-win";
+    const database = "./src/__tests__/test.mdb";
+    const s = "SELECT * FROM Colors WHERE Value > 10;";
+    const q = await sqlAsString({ database, windowsPath, sql: s });
+    const expected = `ColorsValueBlue16Yellow12`;
+    expect(q.replace(/(\r\n|\n|\r| |\t)/gm, "").trim()).toEqual(expected);
   });
 });
 
@@ -298,5 +310,47 @@ describe("mdb-schema", () => {
     const file = "./src/__tests__/__to_file__/schema-test-color-2.csv";
     const s = await schemaTableToFile({ database, windowsPath, table, file });
     expect(s).toBeTruthy();
+  });
+});
+
+describe("utilities-columnsName", () => {
+  test("columnsName test.mdb Colors", async () => {
+    const windowsPath = "./mdbtools-win";
+    const database = "./src/__tests__/test.mdb";
+    const table = "Colors";
+    const c = await columnsName({ database, windowsPath, table });
+    const expected = ["Colors", "Value"];
+    expect(c.sort()).toEqual(expected.sort());
+  });
+
+  test("columnsNameTables test.mdb", async () => {
+    const windowsPath = "./mdbtools-win";
+    const database = "./src/__tests__/test.mdb";
+
+    const c = await columnsNameTables({ database, windowsPath });
+
+    const expected: Record<string, string[]> = {
+      Users: [
+        "UserID",
+        "UserName",
+        "UserSex",
+        "UserBirthday",
+        "UserTelephone",
+        "UserValue",
+        "UserCategory",
+      ],
+      Colors: ["Colors", "Value"],
+      Dictionary: ["Number", "Word"],
+      "Colors Table Two": ["Colors", "Value"],
+    };
+
+    const expectedKeys = Object.keys(expected);
+    const cKeys = Object.keys(c);
+
+    expect(cKeys.sort()).toEqual(expectedKeys.sort());
+
+    expectedKeys.forEach((key: string) => {
+      expect(c[key].sort()).toEqual(expected[key].sort());
+    });
   });
 });
