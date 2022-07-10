@@ -37,4 +37,12 @@ CREATE TABLE [Colors Table Two]
 	[Value]			Long Integer
 );
 
+CREATE TABLE [Colors-Table Others]
+ (
+	[Colors]			Text (50), 
+	[Value]			Long Integer, 
+	[Second Value]			Long Integer, 
+	[Others-A]			Text (50)
+);
+
 

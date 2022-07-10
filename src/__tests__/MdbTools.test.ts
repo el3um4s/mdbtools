@@ -301,11 +301,44 @@ describe("mdb-export", () => {
     expect(csv).toEqual(expected.trim());
   });
 
+  test("mdb-export test.mdb Colors-Table Others", async () => {
+    const windowsPath = "./mdbtools-win";
+    const database = "./src/__tests__/test.mdb";
+    const table = "Colors-Table Others";
+    const csv = await tableToCSV({ database, windowsPath, table });
+    const expected = `Colors,Value,Second Value,Others-A
+"Red",10,5,"R"
+"Green",5,3,"G"
+"Blue",16,4,"B"
+"Black",1,3,"N"
+"Yellow",12,3,"Y"
+"White",10,1,"W"
+"Others",0,0,"A"`;
+    expect(csv).toEqual(expected.trim());
+  });
+
   test("mdb-export test.mdb colors > test-export-colors.csv", async () => {
     const windowsPath = "./mdbtools-win";
     const database = "./src/__tests__/test.mdb";
     const table = "Colors";
     const file = "./src/__tests__/__to_file__/test-export-colors.csv";
+    const options = "-d; -Q";
+    const t = await tableToCSVFile({
+      database,
+      windowsPath,
+      table,
+      file,
+      options,
+    });
+
+    expect(t).toBeTruthy();
+  });
+
+  test("mdb-export test.mdb Colors-Table Others > Colors-Table Others.csv", async () => {
+    const windowsPath = "./mdbtools-win";
+    const database = "./src/__tests__/test.mdb";
+    const table = "Colors-Table Others";
+    const file = "./src/__tests__/__to_file__/Colors-Table Others.csv";
     const options = "-d; -Q";
     const t = await tableToCSVFile({
       database,
@@ -398,6 +431,7 @@ describe("utilities-columnsName", () => {
       Colors: ["Colors", "Value"],
       Dictionary: ["Number", "Word"],
       "Colors Table Two": ["Colors", "Value"],
+      "Colors-Table Others": ["Colors", "Value", "Second Value", "Others-A"],
     };
 
     const expectedKeys = Object.keys(expected);
