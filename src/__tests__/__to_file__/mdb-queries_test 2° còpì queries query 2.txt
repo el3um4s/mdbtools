@@ -1,0 +1,1 @@
+SELECTÀ À,Colors 1°à.* FROM À,[Colors 1°à] WHERE À À

@@ -97,7 +97,7 @@ const tablesToFile = async (
   const pathToFile = path.resolve(file);
   const result = await printCommand({
     command: command,
-    args: [pathDatabase, "-1"],
+    args: [`"${pathDatabase}"`, "-1"],
     file: pathToFile,
   });
 
@@ -120,7 +120,7 @@ const tablesAllToFile = async (
   const pathToFile = path.resolve(file);
   const result = await printCommand({
     command: command,
-    args: [pathDatabase, "-1", "-S"],
+    args: [`"${pathDatabase}"`, "-1", "-S"],
     file: pathToFile,
   });
 

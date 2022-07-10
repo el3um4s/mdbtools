@@ -1,0 +1,1 @@
+SELECTÀ À,Users.* FROM À,[Users] WHERE (((Users.UserCategory)="A")) À

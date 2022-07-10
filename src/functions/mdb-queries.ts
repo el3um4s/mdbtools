@@ -62,7 +62,7 @@ const queriesToFile = async (
   const pathToFile = path.resolve(file);
   const result = await printCommand({
     command: command,
-    args: [pathDatabase, "-1"],
+    args: [`"${pathDatabase}"`, "-1"],
     file: pathToFile,
   });
 
@@ -91,7 +91,7 @@ const queriesSQLToFile = async (
   const pathToFile = path.resolve(file);
   const result = await printCommand({
     command: command,
-    args: [pathDatabase, `"${query}"`],
+    args: [`"${pathDatabase}"`, `"${query}"`],
     file: pathToFile,
   });
 

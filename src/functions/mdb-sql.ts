@@ -63,7 +63,7 @@ const sqlToFile = async (
   const pathToFile = path.resolve(file);
   const result = await printCommand({
     command,
-    args: [pathDatabase, "-F", "-P"],
+    args: [`"${pathDatabase}"`, "-F", "-P"],
     input: sql,
     file: pathToFile,
   });
@@ -137,7 +137,7 @@ const sqlFromFileToFile = async (
   const pathToFile = path.resolve(file);
   const result = await printCommand({
     command,
-    args: [pathDatabase, "-F", "-P", input],
+    args: [`"${pathDatabase}"`, "-F", "-P", input],
     file: pathToFile,
   });
 

@@ -61,7 +61,7 @@ const schemaToFile = async (
   const pathToFile = path.resolve(file);
   const result = await printCommand({
     command,
-    args: [pathDatabase],
+    args: [`"${pathDatabase}"`],
     file: pathToFile,
   });
 
@@ -90,7 +90,7 @@ const schemaTableToFile = async (
   const pathToFile = path.resolve(file);
   const result = await printCommand({
     command,
-    args: [pathDatabase, `-T"${table}"`],
+    args: [`"${pathDatabase}"`, `-T"${table}"`],
     file: pathToFile,
   });
 

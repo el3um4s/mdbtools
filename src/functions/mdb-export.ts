@@ -59,7 +59,7 @@ const tableToCSVFile = async (
   const pathToFile = path.resolve(file);
   const result = await printCommand({
     command,
-    args: [pathDatabase, `"${table}"`, opts],
+    args: [`"${pathDatabase}"`, `"${table}"`, opts],
     file: pathToFile,
   });
 
