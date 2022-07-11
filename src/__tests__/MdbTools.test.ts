@@ -1131,13 +1131,15 @@ describe("utilities-columnsName", () => {
   });
 });
 
-describe.skip("anomaly", () => {
+describe("Known Issue", () => {
   test(`mdb-queries "test 2.mdb" "query 2° ù"`, async () => {
     const windowsPath = "./mdbtools-win";
     const database = "./src/__tests__/test 2.mdb";
     const query = "query 2";
     const q = await queriesSQL({ database, windowsPath, query });
-    expect(q.trim()).toEqual(`SELECT [Colors 1°à].* FROM [Colors 1°à]`.trim());
+    expect(q.trim()).not.toEqual(
+      `SELECT [Colors 1°à].* FROM [Colors 1°à]`.trim()
+    );
   });
 
   test(`mdb-queries "test 2° còpì.mdb" "query 2° ù"`, async () => {
@@ -1145,10 +1147,28 @@ describe.skip("anomaly", () => {
     const database = "./src/__tests__/test 2° còpì.mdb";
     const query = "query 2";
     const q = await queriesSQL({ database, windowsPath, query });
-    expect(q.trim()).toEqual(`SELECT [Colors 1°à].* FROM [Colors 1°à]`.trim());
+    expect(q.trim()).not.toEqual(
+      `SELECT [Colors 1°à].* FROM [Colors 1°à]`.trim()
+    );
   });
 
-  test("mdb-queries test 2° còpì.mdb query 2° ù > mdb-queries_test 2° còpì queries query 2° ù.txt", async () => {
+  test.skip("mdb-export test 2° còpì.mdb Colors 1°à", async () => {
+    const windowsPath = "./mdbtools-win";
+    const database = "./src/__tests__/test 2° còpì.mdb";
+    const table = "Colors 1°à";
+    const csv = await tableToCSV({ database, windowsPath, table });
+    const expected = `Colors,Value,Second Value,Others-A
+"Red",10,5,"à"
+"Green",5,3,"1a"
+"Blue",16,4,"ò"
+"Black",1,3,"2°"
+"Yellow",12,3,"Y"
+"White",10,1,"W"
+"Others",0,0,"A"`;
+    expect(csv).toEqual(expected.trim());
+  });
+
+  test.skip("mdb-queries test 2° còpì.mdb query 2° ù > mdb-queries_test 2° còpì queries query 2° ù.txt", async () => {
     const windowsPath = "./mdbtools-win";
     const database = "./src/__tests__/test 2° còpì.mdb";
     const query = "query 2° ù";
@@ -1156,10 +1176,10 @@ describe.skip("anomaly", () => {
       "./src/__tests__/__to_file__/mdb-queries_test 2° còpì queries query 2° ù.txt";
     const t = await queriesSQLToFile({ database, windowsPath, query, file });
 
-    expect(t).toBeTruthy();
+    expect(t).toBeFalsy();
   });
 
-  test("mdb-export test 2.mdb Colors 1°à > mdb-export test 2 test-export-Colors 1°à.csv", async () => {
+  test.skip("mdb-export test 2.mdb Colors 1°à > mdb-export test 2 test-export-Colors 1°à.csv", async () => {
     const windowsPath = "./mdbtools-win";
     const database = "./src/__tests__/test 2.mdb";
     const table = "Colors 1°à";
@@ -1173,6 +1193,6 @@ describe.skip("anomaly", () => {
       file,
       options,
     });
-    expect(t).toBeTruthy();
+    expect(t).toBeFalsy();
   });
 });

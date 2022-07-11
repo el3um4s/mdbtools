@@ -398,6 +398,10 @@ console.log(allColumns);
 // }
 ```
 
+### Known Issues
+
+In some Windows and Linux configurations it is not possible to read queries and tables with accented characters or symbols such as `°` or `µ`.
+
 ### Acknowledgments
 
 Sample database used for tests and examples is from [mdb](https://github.com/maxogden/node-mdb).
