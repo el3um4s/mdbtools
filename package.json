@@ -1,6 +1,6 @@
 {
   "name": "@el3um4s/mdbtools",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "mdbtools for Node to use MS Access database",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
